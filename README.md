@@ -19,7 +19,7 @@ This Raycast extension is the UI layer. It talks to a local bridge server (`.exe
 
 ## Setup
 
-### 1. Get the server folder  + browser extension.
+### 1. Get the server folder + browser extension
 
 Go to [switch-tabs-companion](https://github.com/ferrocyante/Manage-Server) and follow the full setup guide there. You need the server and browser extension set up before this Raycast extension will work.
 
@@ -112,15 +112,14 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 
 ### Media Controls
 - Play / pause media in any tab
-- Seek forward and backward (configurable seconds, default 5s)
-- Seek debounce: rapid presses accumulate into one combined seek
+- Seek forward and backward (5s, debounced — rapid presses accumulate into one combined seek)
 - Increase / decrease playback speed
 - Real-time status badge showing current time, duration, and speed
 
 ### Multi-Browser
 - Connects to multiple browsers simultaneously
 - Cycle through connected browsers with a hotkey
-- Per-browser window filter with smart window naming (uses active tab title or domain)
+- Per-browser window filter with smart window naming
 - Browser icons for Edge, Chrome, Brave, Helium
 
 ### Window Management
@@ -133,7 +132,8 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 
 ---
 
-## All Keyboard Shortcuts
+<details>
+<summary><strong>All Keyboard Shortcuts</strong></summary>
 
 These are the hardcoded shortcuts that are always active. Configurable shortcuts (set in Extension Preferences) are listed separately below.
 
@@ -174,8 +174,8 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl + ←` | Play / Pause Media |
-| `→` | Seek Forward (default 5s) |
-| `←` | Seek Backward (default 5s) |
+| `→` | Seek Forward (5s) |
+| `←` | Seek Backward (5s) |
 | `Shift + .` | Increase Playback Speed |
 | `Shift + ,` | Decrease Playback Speed |
 | `Shift + →` | Search in Tab *(when media is present)* |
@@ -185,8 +185,8 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 
 | Shortcut | Action |
 |----------|--------|
-| `→` | Search in Tab *(when no media)* |
-| `←` | Input Search in Active Tab *(when no media)* |
+| `→` | Search in Tab |
+| `←` | Input Search in Active Tab |
 
 ### Search Mode (Web Search)
 
@@ -213,9 +213,12 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 | `Shift + Tab` | Open Downloads View *(configurable)* |
 | `Alt + X` | Open Sessions View *(configurable)* |
 
+</details>
+
 ---
 
-## Configurable Shortcuts
+<details>
+<summary><strong>Configurable Shortcuts</strong></summary>
 
 Every shortcut marked *(configurable)* above can be changed in Extension Preferences. Each has a **Modifier** dropdown (None / Windows / Control / Alt / Shift) and a **Key** text field.
 
@@ -236,9 +239,12 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 | Search: New Tab Modifier + Key | None + Enter | Open search result in new tab |
 | Search: Current Tab Modifier + Key | None + *(Ctrl+Enter)* | Open search result in current tab |
 
+</details>
+
 ---
 
-## All Preferences
+<details>
+<summary><strong>All Preferences</strong></summary>
 
 ### Search
 
@@ -250,8 +256,7 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 | Clear Search on Current Tab | Off | Opening a result in the current tab clears the search bar |
 | Lucky Search Provider | Google | Search engine for "I'm Feeling Lucky" (Google or DuckDuckGo) |
 | Show Entity Images | Off | Rich thumbnails in search suggestions — may slow suggestions |
-|  Clear via '''*(configurable)* | Off | Typing `'` in Search Mode when there is text clears it first |
-
+| Search Mode: Clear via `'` | Off | Typing `'` in Search Mode when there is text clears it first |
 
 ### Window Filter
 
@@ -273,9 +278,12 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 | Color: Discarded Tab | `SecondaryText` | Hex code or Raycast color name |
 | Color: Pinned Tab | `Blue` | Hex code or Raycast color name |
 
+</details>
+
 ---
 
-## Project Structure
+<details>
+<summary><strong>Project Structure</strong></summary>
 
 ```
 raycast-extension/
@@ -328,14 +336,14 @@ raycast-extension/
 │       └── types.ts               # Search-specific types (SearchResult)
 ├── assets/
 │   ├── command-icon.png
-│   ├── all.png / edge.png / chrome.png / brave.png
-│   ├── vivaldi.png / arc.png / opera.png / helium.png
-│   ├── zen.png / firefox.png
+│   ├── all.png / edge.png / chrome.png / brave.png / helium.png
 │   └── ext.png / ext2.png
 ├── package.json
 ├── raycast-env.d.ts
 └── README.md
 ```
+
+</details>
 
 ---
 
