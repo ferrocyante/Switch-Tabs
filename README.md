@@ -132,9 +132,7 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 
 ---
 
-<details>
-<summary>⌨️ &nbsp;<strong>All Keyboard Shortcuts</strong> &nbsp;—&nbsp; tab actions, groups, media, search, navigation</summary>
-<br>
+## Keyboard Shortcuts
 
 ### Tab Actions
 
@@ -145,7 +143,7 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | `Ctrl + Shift + Enter` | Switch to Tab in Background (Search Mode) |
 | `Ctrl + →` | Preview Tab (inline detail view) |
 | `Shift + Enter` | Move Tab to Window (opens submenu) |
-| `Ctrl + W` / configurable | Close Tab |
+| `Ctrl + W` | Close Tab *(configurable)* |
 | `Ctrl + X` | Close Window *(configurable)* |
 | `Ctrl + M` | Minimize / Restore Window |
 | `Ctrl + .` | Pin / Unpin Tab |
@@ -168,7 +166,7 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 
 ### Media Controls
 
-> Only visible when the tab has active media. `→` / `←` switch meaning when media is present.
+Only visible when the tab has active media.
 
 | Shortcut | Action |
 |----------|--------|
@@ -177,17 +175,12 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | `←` | Seek Backward (5s) |
 | `Shift + .` | Increase Playback Speed |
 | `Shift + ,` | Decrease Playback Speed |
-| `Shift + →` | Search in Tab *(when media is present)* |
-| `Shift + ←` | Input Search in Active Tab *(when media is present)* |
+| `Shift + →` | Search in Tab (when media is present) |
+| `Shift + ←` | Input Search in Active Tab (when media is present) |
 
-### Tab Management (no media)
+When no media is present, `→` and `←` open Search in Tab and Input Search directly.
 
-| Shortcut | Action |
-|----------|--------|
-| `→` | Search in Tab |
-| `←` | Input Search in Active Tab |
-
-### Search Mode (Web Search)
+### Search Mode
 
 | Shortcut | Action |
 |----------|--------|
@@ -198,13 +191,13 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | `Shift + S` | Set as Search Query (without opening) |
 | `Shift + C` | Copy URL |
 
-### Navigation & Mode Switching
+### Navigation
 
 | Shortcut | Action |
 |----------|--------|
 | `` ` `` | Cycle Browser Filter *(configurable)* |
 | `Tab` | Cycle Window Filter *(configurable)* |
-| `/` | Toggle Filter ↔ Search Mode *(configurable)* |
+| `/` | Toggle Filter / Search Mode *(configurable)* |
 | `'` | Clear Search / Filter Text *(configurable)* |
 | `Ctrl + Space` | Open History View *(configurable)* |
 | `Shift + Space` | Open Bookmarks View *(configurable)* |
@@ -212,40 +205,11 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | `Shift + Tab` | Open Downloads View *(configurable)* |
 | `Alt + X` | Open Sessions View *(configurable)* |
 
-</details>
+Every shortcut marked *(configurable)* can be changed in Extension Preferences — each has a Modifier dropdown and a Key field.
 
 ---
 
-<details>
-<summary>🎛️ &nbsp;<strong>Configurable Shortcuts</strong> &nbsp;—&nbsp; every shortcut can be remapped in Extension Preferences</summary>
-<br>
-
-Each shortcut has a **Modifier** dropdown (None / Windows / Control / Alt / Shift) and a **Key** text field. Open `Ctrl + ,` in Raycast to change them.
-
-| Action | Default |
-|--------|---------|
-| Switch to Tab | Enter |
-| Close Tab | *(none — set in prefs)* |
-| Close Window | Ctrl + X |
-| Cycle Browser | `` ` `` |
-| Cycle Window | Tab |
-| History View | Ctrl + Space |
-| Bookmarks View | Shift + Space |
-| Workspaces View | Ctrl + Backspace |
-| Downloads View | Shift + Tab |
-| Sessions View | Alt + X |
-| Toggle Filter ↔ Search Mode | `/` |
-| Clear Search / Filter | `'` |
-| Search: Open in New Tab | Enter |
-| Search: Open in Current Tab | Ctrl + Enter |
-
-</details>
-
----
-
-<details>
-<summary>⚙️ &nbsp;<strong>All Preferences</strong> &nbsp;—&nbsp; search behavior, window filter, tab icons & colors</summary>
-<br>
+## Preferences
 
 ### Search
 
@@ -257,7 +221,6 @@ Each shortcut has a **Modifier** dropdown (None / Windows / Control / Alt / Shif
 | Clear Search on Current Tab | Off | Opening a result in the current tab clears the search bar |
 | Lucky Search Provider | Google | Search engine for "I'm Feeling Lucky" (Google or DuckDuckGo) |
 | Show Entity Images | Off | Rich thumbnails in search suggestions — may slow suggestions |
-| Search Mode: Clear via `'` | Off | Typing `'` in Search Mode when there is text clears it first |
 
 ### Window Filter
 
@@ -279,13 +242,9 @@ Each shortcut has a **Modifier** dropdown (None / Windows / Control / Alt / Shif
 | Color: Discarded Tab | `SecondaryText` | Hex code or Raycast color name |
 | Color: Pinned Tab | `Blue` | Hex code or Raycast color name |
 
-</details>
-
 ---
 
-<details>
-<summary>🗂️ &nbsp;<strong>Project Structure</strong> &nbsp;—&nbsp; source files and what each one does</summary>
-<br>
+## Project Structure
 
 ```
 raycast-extension/
@@ -301,7 +260,7 @@ raycast-extension/
 │   │   ├── CollapsedTabsSection.tsx   # Collapsed view (groups as folders)
 │   │   ├── SearchResultsSection.tsx   # Web search results list
 │   │   ├── SearchBarFilter.tsx        # Browser/window dropdown accessory
-│   │   ├── SearchModeAction.tsx       # Toggle Filter ↔ Search mode action
+│   │   ├── SearchModeAction.tsx       # Toggle Filter / Search mode action
 │   │   ├── CycleBrowserAction.tsx     # Cycle browser filter action
 │   │   ├── CycleWindowAction.tsx      # Cycle window filter action
 │   │   ├── ToggleCollapseAction.tsx   # Toggle collapsed/expanded view action
@@ -330,12 +289,12 @@ raycast-extension/
 │   │   └── BrowserStore.tsx       # Global browser state, metadata sync, socket ref
 │   ├── hooks/
 │   │   ├── useBrowser.ts          # Core data hook — tabs, groups, bookmarks, sessions
-│   │   ├── useTabActions.ts       # All tab action dispatchers (activate, close, group…)
+│   │   ├── useTabActions.ts       # All tab action dispatchers
 │   │   ├── useFilterState.ts      # Persistent browser/window filter state
-│   │   └── useLocalSearch.ts      # Client-side tab search (O(1) pre-computed index)
+│   │   └── useLocalSearch.ts      # Client-side tab search
 │   └── utils/
-│       ├── useSearch.ts           # Web search suggestions hook (Google API)
-│       └── types.ts               # Search-specific types (SearchResult)
+│       ├── useSearch.ts           # Web search suggestions hook
+│       └── types.ts               # Search-specific types
 ├── assets/
 │   ├── command-icon.png
 │   ├── all.png / edge.png / chrome.png / brave.png / helium.png
@@ -344,8 +303,6 @@ raycast-extension/
 ├── raycast-env.d.ts
 └── README.md
 ```
-
-</details>
 
 ---
 
