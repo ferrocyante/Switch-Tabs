@@ -133,9 +133,8 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 ---
 
 <details>
-<summary><strong>All Keyboard Shortcuts</strong></summary>
-
-These are the hardcoded shortcuts that are always active. Configurable shortcuts (set in Extension Preferences) are listed separately below.
+<summary>⌨️ &nbsp;<strong>All Keyboard Shortcuts</strong> &nbsp;—&nbsp; tab actions, groups, media, search, navigation</summary>
+<br>
 
 ### Tab Actions
 
@@ -147,7 +146,7 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 | `Ctrl + →` | Preview Tab (inline detail view) |
 | `Shift + Enter` | Move Tab to Window (opens submenu) |
 | `Ctrl + W` / configurable | Close Tab |
-| `Ctrl + X` | Close Window *(configurable, default Ctrl+X)* |
+| `Ctrl + X` | Close Window *(configurable)* |
 | `Ctrl + M` | Minimize / Restore Window |
 | `Ctrl + .` | Pin / Unpin Tab |
 | `Ctrl + R` | Refresh Tab |
@@ -169,7 +168,7 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 
 ### Media Controls
 
-*(Only visible when the tab has active media)*
+> Only visible when the tab has active media. `→` / `←` switch meaning when media is present.
 
 | Shortcut | Action |
 |----------|--------|
@@ -218,33 +217,35 @@ These are the hardcoded shortcuts that are always active. Configurable shortcuts
 ---
 
 <details>
-<summary><strong>Configurable Shortcuts</strong></summary>
+<summary>🎛️ &nbsp;<strong>Configurable Shortcuts</strong> &nbsp;—&nbsp; every shortcut can be remapped in Extension Preferences</summary>
+<br>
 
-Every shortcut marked *(configurable)* above can be changed in Extension Preferences. Each has a **Modifier** dropdown (None / Windows / Control / Alt / Shift) and a **Key** text field.
+Each shortcut has a **Modifier** dropdown (None / Windows / Control / Alt / Shift) and a **Key** text field. Open `Ctrl + ,` in Raycast to change them.
 
-| Preference Name | Default | Description |
-|-----------------|---------|-------------|
-| Switch Tab Modifier + Key | None + *(Enter)* | Switch to a tab |
-| Close Tab Modifier + Key | None + *(none)* | Close a tab |
-| Close Window Modifier + Key | Ctrl + X | Close a browser window |
-| Cycle Browser Modifier + Key | None + `` ` `` | Cycle through connected browsers |
-| Cycle Window Modifier + Key | None + Tab | Cycle through windows of current browser |
-| History View Modifier + Key | Ctrl + Space | Open the History panel |
-| Bookmarks View Modifier + Key | Shift + Space | Open the Bookmarks panel |
-| Workspaces View Modifier + Key | Ctrl + Backspace | Open the Workspaces panel |
-| Downloads View Modifier + Key | Shift + Tab | Open the Downloads panel |
-| Sessions View Modifier + Key | Alt + X | Open the Sessions panel |
-| Search Toggle Modifier + Key | None + `/` | Toggle Filter ↔ Search mode |
-| Clear Search Modifier + Key | None + `'` | Clear the search/filter bar |
-| Search: New Tab Modifier + Key | None + Enter | Open search result in new tab |
-| Search: Current Tab Modifier + Key | None + *(Ctrl+Enter)* | Open search result in current tab |
+| Action | Default |
+|--------|---------|
+| Switch to Tab | Enter |
+| Close Tab | *(none — set in prefs)* |
+| Close Window | Ctrl + X |
+| Cycle Browser | `` ` `` |
+| Cycle Window | Tab |
+| History View | Ctrl + Space |
+| Bookmarks View | Shift + Space |
+| Workspaces View | Ctrl + Backspace |
+| Downloads View | Shift + Tab |
+| Sessions View | Alt + X |
+| Toggle Filter ↔ Search Mode | `/` |
+| Clear Search / Filter | `'` |
+| Search: Open in New Tab | Enter |
+| Search: Open in Current Tab | Ctrl + Enter |
 
 </details>
 
 ---
 
 <details>
-<summary><strong>All Preferences</strong></summary>
+<summary>⚙️ &nbsp;<strong>All Preferences</strong> &nbsp;—&nbsp; search behavior, window filter, tab icons & colors</summary>
+<br>
 
 ### Search
 
@@ -283,7 +284,8 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 ---
 
 <details>
-<summary><strong>Project Structure</strong></summary>
+<summary>🗂️ &nbsp;<strong>Project Structure</strong> &nbsp;—&nbsp; source files and what each one does</summary>
+<br>
 
 ```
 raycast-extension/
