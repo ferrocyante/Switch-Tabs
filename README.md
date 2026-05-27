@@ -3,7 +3,7 @@
 A [Raycast](https://raycast.com) extension for Windows that gives you instant keyboard-driven control over every open tab across all your Chromium browsers — switch, search, group, pin, close, control media, manage bookmarks, browse history, track downloads, and more.
 
 > **Requires the companion server + browser extension.**
-> Download and set up from the companion repo first: [switch-tabs-companion](https://github.com/your-username/switch-tabs-companion)
+> Download and set up from the companion repo first: [switch-tabs-companion](https://github.com/ferrocyante/Manage-Server)
 
 ---
 
@@ -13,19 +13,19 @@ A [Raycast](https://raycast.com) extension for Windows that gives you instant ke
 Raycast Extension  ←──WebSocket──→  Bridge Server (.exe)  ←──Native Messaging──→  Browser Extension
 ```
 
-This Raycast extension is the UI layer. It talks to a local bridge server (`.exe`) which relays commands to and from the browser extension. Both the server and browser extension live in the [companion repo](https://github.com/your-username/switch-tabs-companion).
+This Raycast extension is the UI layer. It talks to a local bridge server (`.exe`) which relays commands to and from the browser extension. Both the server and browser extension live in the [companion repo](https://github.com/ferrocyante/Manage-Server).
 
 ---
 
 ## Setup
 
-### 1. Get the companion repo
+### 1. Get the server folder  + browser extension.
 
-Go to [switch-tabs-companion](https://github.com/your-username/switch-tabs-companion) and follow the full setup guide there. You need the server and browser extension set up before this Raycast extension will work.
+Go to [switch-tabs-companion](https://github.com/ferrocyante/Manage-Server) and follow the full setup guide there. You need the server and browser extension set up before this Raycast extension will work.
 
 ### 2. Configure extension preferences
 
-Open Raycast → search **Switch Tabs** → press `Cmd + ,` to open Extension Preferences.
+Open Raycast → search **Switch Tabs** → press `Ctrl + ,` to open Extension Preferences.
 
 | Preference | What to do |
 |------------|------------|
@@ -250,8 +250,8 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 | Clear Search on Current Tab | Off | Opening a result in the current tab clears the search bar |
 | Lucky Search Provider | Google | Search engine for "I'm Feeling Lucky" (Google or DuckDuckGo) |
 | Show Entity Images | Off | Rich thumbnails in search suggestions — may slow suggestions |
-| Search Mode: Clear via '/' | Off | Typing `/` in Search Mode when there is text clears it first |
-| Filter Mode: Clear via '/' | Off | Typing `/` in Filter Mode when there is text clears it first |
+|  Clear via '''*(configurable)* | Off | Typing `'` in Search Mode when there is text clears it first |
+
 
 ### Window Filter
 
@@ -272,14 +272,6 @@ Every shortcut marked *(configurable)* above can be changed in Extension Prefere
 | Color: Sleeping Tab | `SecondaryText` | Hex code (e.g. `#FF9F0A`) or Raycast color name |
 | Color: Discarded Tab | `SecondaryText` | Hex code or Raycast color name |
 | Color: Pinned Tab | `Blue` | Hex code or Raycast color name |
-
-### Media
-
-| Preference | Default | Description |
-|------------|---------|-------------|
-| Media Seek Amount | `5` | Seconds to seek forward/backward |
-| Enable Media Seek Debounce | On | Accumulates rapid seeks into one combined action |
-| Seek Debounce Delay (ms) | `500` | Wait time after last seek press before executing |
 
 ---
 
