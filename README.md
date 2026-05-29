@@ -10,10 +10,10 @@ A [Raycast](https://raycast.com) extension for Windows that gives you instant ke
 ## How It Works
 
 ```
-Raycast Extension  ←──WebSocket──→  Bridge Server (.exe)  ←──Native Messaging──→  Browser Extension
+Raycast Extension  ←──WebSocket──→  Bridge Server (.exe)  ←──WebSocket──→  Browser Extension
 ```
 
-This Raycast extension is the UI layer. It talks to a local bridge server (`.exe`) which relays commands to and from the browser extension. Both the server and browser extension live in the [companion repo](https://github.com/ferrocyante/Manage-Server).
+The bridge server (`raycast-bridge-server.exe`) is a standalone background process that runs independently of any browser or Raycast session. It listens on port `19222` and relays messages between Raycast and your browser extension. The server runs until you explicitly stop it — it does not shut down when you close your browser or Raycast.
 
 ---
 
@@ -21,26 +21,25 @@ This Raycast extension is the UI layer. It talks to a local bridge server (`.exe
 
 ### 1. Get the server folder + browser extension
 
-Go to [switch-tabs-companion](https://github.com/ferrocyante/Manage-Server) and follow the full setup guide there. You need the server and browser extension set up before this Raycast extension will work.
+Go to [switch-tabs-companion](https://github.com/ferrocyante/Manage-Server) and follow the full setup guide there.
 
 ### 2. Configure extension preferences
 
-Open Raycast → search **Switch Tabs** → press `Ctrl + ,` to open Extension Preferences.
+The first time you open **Switch Tabs** or **Manage Server**, Raycast will ask you to configure the extension. Set:
 
 | Preference | What to do |
 |------------|------------|
 | **Server Directory Path** | Point this to the `server` folder you downloaded from the companion repo (e.g. `C:\Tools\switch-tabs-server`) |
-| **Browser Extension ID** | If you installed from the **Edge Add-ons Store**, leave the default as-is. If you loaded the extension **unpacked** (manually via `chrome://extensions`), paste your extension's ID here |
 
-### 3. Register the bridge and start the server
+### 3. Start the server
 
-Open Raycast → type **Manage Server** → press Enter. Run these in order:
+Open Raycast → type **Manage Server** → press Enter → select **Start Server**.
 
-1. **Register Browser Bridge (Native Host)** — one-time only. A PowerShell window opens, registers the server with your browser, and closes automatically.
-2. **Watch Bridge Logs** — opens a terminal with real-time WebSocket logs to confirm the connection is live.
-3. **Import Edge Workspaces** — only needed if you use Edge Workspaces.
+The server starts silently in the background. Enable **Start at Login** to have it start automatically every time Windows boots.
 
-After registration, open **Switch Tabs**. Your tabs should appear within a second or two.
+### 4. Open Switch Tabs
+
+Open Raycast → type **Switch Tabs** → press Enter. Your tabs should appear within a second or two.
 
 ---
 
@@ -49,7 +48,7 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | Command | Description |
 |---------|-------------|
 | **Switch Tabs** | Main command — search, filter, and act on all open tabs |
-| **Manage Server** | Run setup scripts, watch live logs, import workspaces |
+| **Manage Server** | Start/stop the server, toggle login startup, watch live logs, import workspaces |
 
 ---
 
@@ -60,7 +59,7 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 - Open tabs in the background without leaving Raycast
 - Close individual tabs or entire windows
 - Pin / unpin tabs
-- Rename tabs with a custom local title (persists across SPA navigations on the same domain, resets on domain change)
+- Rename tabs with a custom local title (persists across SPA navigations on the same domain)
 - Duplicate tabs
 - Refresh tabs
 - Discard (freeze/suspend) tabs to free memory
@@ -81,7 +80,6 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 - Live Google search suggestions with optional rich entity images
 - Open results in a new tab, current tab, background tab, or a popup window
 - "I'm Feeling Lucky" (Google or DuckDuckGo)
-- Set a search result as the current search query without opening it
 - Surgical search targeting: scan the active tab for input fields and inject a query directly
 
 ### Bookmarks
@@ -108,11 +106,10 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 ### Workspaces (Edge)
 - Browse Edge workspace tab groups
 - Import workspace configurations from Edge sync exports
-- Workspace names sync via native messaging even when the WebSocket is offline
 
 ### Media Controls
 - Play / pause media in any tab
-- Seek forward and backward (5s, debounced — rapid presses accumulate into one combined seek)
+- Seek forward and backward
 - Increase / decrease playback speed
 - Real-time status badge showing current time, duration, and speed
 
@@ -120,15 +117,13 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 - Connects to multiple browsers simultaneously
 - Cycle through connected browsers with a hotkey
 - Per-browser window filter with smart window naming
-- Browser icons for Edge, Chrome, Brave, Helium
 
 ### Window Management
 - Filter tabs by window
 - Cycle through windows with a hotkey
-- Close windows
-- Minimize / restore windows
+- Close, minimize, restore windows
 - Toggle fullscreen
-- Toggle Focus Mode (detach tab into a popup window, or re-attach a popup)
+- Toggle Focus Mode (detach tab into a popup window, or re-attach)
 
 ---
 
@@ -139,10 +134,9 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | Shortcut | Action |
 |----------|--------|
 | `Enter` | Switch to Tab *(configurable)* |
-| `Space` | Switch to Tab in Background (Filter Mode) |
-| `Ctrl + Shift + Enter` | Switch to Tab in Background (Search Mode) |
-| `Ctrl + →` | Preview Tab (inline detail view) |
-| `Shift + Enter` | Move Tab to Window (opens submenu) |
+| `Ctrl + Shift + Enter` | Switch to Tab in Background |
+| `Ctrl + →` | Preview Tab |
+| `Shift + Enter` | Move Tab to Window (submenu) |
 | `Ctrl + W` | Close Tab *(configurable)* |
 | `Ctrl + X` | Close Window *(configurable)* |
 | `Ctrl + M` | Minimize / Restore Window |
@@ -160,13 +154,11 @@ After registration, open **Switch Tabs**. Your tabs should appear within a secon
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl + G` | Create New Group |
-| `Shift + Z` | Move to Group (opens submenu) |
+| `Shift + Z` | Move to Group (submenu) |
 | `Shift + A` | Toggle Collapsed / Expanded view |
 | `Ctrl + E` | Edit Group (name + color) — on a folder item |
 
 ### Media Controls
-
-Only visible when the tab has active media.
 
 | Shortcut | Action |
 |----------|--------|
@@ -178,8 +170,6 @@ Only visible when the tab has active media.
 | `Shift + →` | Search in Tab (when media is present) |
 | `Shift + ←` | Input Search in Active Tab (when media is present) |
 
-When no media is present, `→` and `←` open Search in Tab and Input Search directly.
-
 ### Search Mode
 
 | Shortcut | Action |
@@ -188,7 +178,7 @@ When no media is present, `→` and `←` open Search in Tab and Input Search di
 | `Ctrl + Enter` | Open in Current Tab *(configurable)* |
 | `Shift + Enter` | Open in Background |
 | `Ctrl + O` | Open in Focus Popup |
-| `Shift + S` | Set as Search Query (without opening) |
+| `Shift + S` | Set as Search Query |
 | `Shift + C` | Copy URL |
 
 ### Navigation
@@ -205,11 +195,17 @@ When no media is present, `→` and `←` open Search in Tab and Input Search di
 | `Shift + Tab` | Open Downloads View *(configurable)* |
 | `Alt + X` | Open Sessions View *(configurable)* |
 
-Every shortcut marked *(configurable)* can be changed in Extension Preferences — each has a Modifier dropdown and a Key field.
+Every shortcut marked *(configurable)* can be changed in Extension Preferences.
 
 ---
 
 ## Preferences
+
+### Server
+
+| Preference | Description |
+|------------|-------------|
+| Server Directory Path | Path to the `server` folder containing the bridge server exe and scripts |
 
 ### Search
 
@@ -219,17 +215,24 @@ Every shortcut marked *(configurable)* can be changed in Extension Preferences �
 | Clear Search on Enter | Off | Pressing Enter on a web search result clears the search bar |
 | Clear Search on Background | Off | Opening a background search clears the search bar |
 | Clear Search on Current Tab | Off | Opening a result in the current tab clears the search bar |
-| Lucky Search Provider | Google | Search engine for "I'm Feeling Lucky" (Google or DuckDuckGo) |
-| Show Entity Images | Off | Rich thumbnails in search suggestions — may slow suggestions |
+| Lucky Search Provider | Google | Search engine for "I'm Feeling Lucky" |
+| Show Entity Images | Off | Rich thumbnails in search suggestions |
 
 ### Window Filter
 
 | Preference | Default | Description |
 |------------|---------|-------------|
 | Show Window Filter | On | Dropdown to filter tabs by browser window |
-| Enable Smart Window Naming | On | Windows named by active tab title/domain instead of "Window 1, 2…" |
-| Include 'All Windows' View | Off | Adds an "All Windows" option to the window filter dropdown |
+| Enable Smart Window Naming | On | Windows named by active tab title/domain |
+| Include 'All Windows' View | Off | Adds an "All Windows" option to the window filter |
 | Group Tabs by Domain | Off | Groups tabs by domain in the expanded view |
+
+### Title Bar
+
+| Preference | Default | Description |
+|------------|---------|-------------|
+| Title Bar: Show | Clock | What to show next to the mode label — Clock, Tab & Group Count, Mode Label Only, or Nothing |
+| Title Bar: Time Format | `h:mm:ss a` | Format string for the clock (e.g. `HH:mm`, `h:mm a`) |
 
 ### Tab Icons & Colors
 
@@ -238,7 +241,7 @@ Every shortcut marked *(configurable)* can be changed in Extension Preferences �
 | Icon: Sleeping Tab | `Icon.Waveform` | Raycast icon name for sleeping/frozen tabs |
 | Icon: Discarded Tab | `Icon.LivestreamDisabled` | Raycast icon name for discarded tabs |
 | Icon: Pinned Tab | `Icon.Pin` | Raycast icon name for pinned tabs |
-| Color: Sleeping Tab | `SecondaryText` | Hex code (e.g. `#FF9F0A`) or Raycast color name |
+| Color: Sleeping Tab | `SecondaryText` | Hex code or Raycast color name |
 | Color: Discarded Tab | `SecondaryText` | Hex code or Raycast color name |
 | Color: Pinned Tab | `Blue` | Hex code or Raycast color name |
 
@@ -249,56 +252,59 @@ Every shortcut marked *(configurable)* can be changed in Extension Preferences �
 ```
 raycast-extension/
 ├── src/
-│   ├── tabSwitch.tsx              # "Switch Tabs" command — main UI entry point
+│   ├── tabSwitch.tsx              # "Switch Tabs" command — data layer entry point
 │   ├── manageServer.tsx           # "Manage Server" command
-│   ├── constants.ts               # WebSocket message types, browser icon map
+│   ├── helpers.ts                 # Cache, shortcut resolver, icon/color helpers
+│   ├── constants.ts               # Browser icon map, constants
 │   ├── types.ts                   # Shared TypeScript interfaces
-│   ├── utils.ts                   # Cache, shortcut resolver, icon/color helpers
 │   ├── components/
+│   │   ├── TabSwitchList.tsx          # Search layer — List wrapper, search state isolation
+│   │   ├── TabSwitchContent.tsx       # Rendering shield — tab list in filter mode
+│   │   ├── TabSwitchStatusViews.tsx   # Server down / connection error / onboarding views
 │   │   ├── TabItem.tsx                # Individual tab list item + full action panel
 │   │   ├── NormalTabsSections.tsx     # Expanded tab list (grouped by window/domain)
 │   │   ├── CollapsedTabsSection.tsx   # Collapsed view (groups as folders)
 │   │   ├── SearchResultsSection.tsx   # Web search results list
-│   │   ├── SearchBarFilter.tsx        # Browser/window dropdown accessory
-│   │   ├── SearchModeAction.tsx       # Toggle Filter / Search mode action
+│   │   ├── BrowserWindowFilter.tsx    # Browser/window dropdown accessory
+│   │   ├── SearchModeToggle.tsx       # Toggle Filter / Search mode action
 │   │   ├── CycleBrowserAction.tsx     # Cycle browser filter action
 │   │   ├── CycleWindowAction.tsx      # Cycle window filter action
 │   │   ├── ToggleCollapseAction.tsx   # Toggle collapsed/expanded view action
 │   │   ├── TabPreview.tsx             # Inline tab detail/preview view
-│   │   ├── TabSearchView.tsx          # Navigate tab to a URL
+│   │   ├── WebSearchView.tsx          # Navigate tab to a URL
 │   │   ├── TargetInputSearchView.tsx  # Surgical input field search targeting
 │   │   ├── RenameTabForm.tsx          # Rename tab form
 │   │   ├── CreateGroupForm.tsx        # Create tab group form
 │   │   ├── EditGroupForm.tsx          # Edit group name/color form
-│   │   ├── GroupDetailView.tsx        # Expanded group detail view
+│   │   ├── TabGroupView.tsx           # Expanded group detail view
 │   │   ├── BookmarksAction.tsx        # Bookmarks panel trigger
 │   │   ├── BookmarksView.tsx          # Bookmarks browser view
 │   │   ├── BookmarkFolderPicker.tsx   # Folder picker for saving bookmarks
 │   │   ├── RenameBookmarkForm.tsx     # Rename bookmark form
-│   │   ├── BrowserHistoryView.tsx     # History browser view
+│   │   ├── HistoryView.tsx            # History browser view
 │   │   ├── HistoryAction.tsx          # History panel trigger
 │   │   ├── DownloadsAction.tsx        # Downloads panel trigger
 │   │   ├── DownloadsView.tsx          # Downloads browser view
-│   │   ├── RecentTabsAction.tsx       # Recent tabs panel trigger
-│   │   ├── RecentTabsView.tsx         # Recently closed tabs view
+│   │   ├── SessionsAction.tsx         # Sessions panel trigger
+│   │   ├── SessionsView.tsx           # Recently closed tabs view
 │   │   ├── WorkspacesAction.tsx       # Workspaces panel trigger
 │   │   ├── WorkspacesView.tsx         # Workspaces browser view
-│   │   ├── StatusViewList.tsx         # Connection error / onboarding views
 │   │   └── index.ts                   # Component barrel exports
 │   ├── context/
-│   │   └── BrowserStore.tsx       # Global browser state, metadata sync, socket ref
+│   │   └── BrowserStore.ts        # Global browser state, WebSocket, health check, metadata sync
 │   ├── hooks/
 │   │   ├── useBrowser.ts          # Core data hook — tabs, groups, bookmarks, sessions
 │   │   ├── useTabActions.ts       # All tab action dispatchers
 │   │   ├── useFilterState.ts      # Persistent browser/window filter state
-│   │   └── useLocalSearch.ts      # Client-side tab search
+│   │   ├── useLocalSearch.ts      # Client-side tab search + browser page matching
+│   │   ├── useWebSearch.ts        # Web search suggestions hook (Google/YouTube)
+│   │   └── useDebounce.ts         # Debounce utility hook
 │   └── utils/
-│       ├── useSearch.ts           # Web search suggestions hook
-│       └── types.ts               # Search-specific types
+│       ├── tabMerger.ts           # Tab merging, enrichment, display subtitle computation
+│       └── searchTypes.ts         # Search-specific types
 ├── assets/
 │   ├── command-icon.png
-│   ├── all.png / edge.png / chrome.png / brave.png / helium.png
-│   └── ext.png / ext2.png
+│   └── all.png / edge.png / chrome.png / brave.png / helium.png
 ├── package.json
 ├── raycast-env.d.ts
 └── README.md
